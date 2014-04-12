@@ -1,0 +1,25 @@
+{
+  "name": "climbing-book",
+  "version": "0.0.1",
+  "description": "climbing-book =============",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nik-kor/climbing-book.git"
+  },
+  "author": "Nikita Korotkih <nikita.korotkih@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nik-kor/climbing-book/issues"
+  },
+  "homepage": "https://github.com/nik-kor/climbing-book",
+  "dependencies": {
+    "lineman": "^0.28.3",
+    "grunt-cli": "^0.1.13",
+    "grunt": "^0.4.4",
+    "express": "^4.0.0"
+  }
+}
