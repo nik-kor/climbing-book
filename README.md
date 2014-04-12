@@ -13,7 +13,6 @@ TODO
 
 Development environment set up:
 
-* create grunt task to render index.html from index.us
 * create grunt task to build app.js
  - concat
  - ng-temlates

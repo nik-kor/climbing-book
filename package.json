@@ -20,6 +20,10 @@
     "lineman": "^0.28.3",
     "grunt-cli": "^0.1.13",
     "grunt": "^0.4.4",
-    "express": "^4.0.0"
+    "express": "^4.0.0",
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "grunt-concat-sourcemap": "^0.4.1"
   }
 }
