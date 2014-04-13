@@ -12,4 +12,12 @@ Development environment set up:
 
 Features:
 
-* create forms for adding/editing trainings
+* New training adding with very simple controls
+ - create form
+ - implement POST /api/trainings
+* Render already added trainings to calendar
+ - FE
+ - GET /api/trainings
+* Read training details(without editing support)
+ - FE
+ - GET /api/trainings/<training-id>

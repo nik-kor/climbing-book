@@ -6,14 +6,6 @@
         <link rel='stylesheet' href='/css/app.css'>
     </head>
     <body ng-cloak>
-        <div class='navbar navbar-inverse navbar-fixed-top'>
-            <div class='navbar-inner'>
-                <div class='container'>
-                    <a class='brand' href='#/home'><%= pkg.name %></a>
-                    <!-- place main menu here -->
-                </div>
-            </div>
-        </div>
         <div class='container'>
             <flash-messages></flash-messages>
             <div id='view' ng-view></div>
