@@ -11,15 +11,22 @@ module.exports = function(grunt) {
                 files: {
                     'public/js/app.js': [
                         'cli/bower_components/jquery/dist/jquery.js',
+                        'cli/bower_components/jquery-ui/ui/jquery-ui.js',
                         'cli/bower_components/angular/angular.js',
+                        'cli/bower_components/angular-route/angular-route.js',
+                        'cli/bower_components/bootstrap/dist/js/bootstrap.js',
+                        'cli/bower_components/fullcalendar/fullcalendar.js',
+                        'cli/bower_components/angular-ui-calendar/src/calendar.js',
+                        'cli/app/bootstrap.js',
+                        '<%= app_js_path %>',
                         'public/js/template-cache.js',
-                        '<%= app_js_path %>'
                     ]
                 }
             },
             css: {
                 files: {
                     'public/css/app.css': [
+                        'cli/bower_components/bootstrap/dist/css/bootstrap.css',
                         'cli/bower_components/fullcalendar/fullcalendar.css'
                     ]
                 }
@@ -58,7 +65,7 @@ module.exports = function(grunt) {
                 tasks: ['jshint']
             },
             pages: {
-                files: ['cli/app/index.us'],
+                files: ['cli/index.us'],
                 tasks: ['page']
             },
             ngtemplates: {
