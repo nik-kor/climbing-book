@@ -10,7 +10,9 @@ module.exports = function(grunt) {
                 files: {
                     'public/js/app.js': [
                         'cli/bower_components/jquery/dist/jquery.js',
-                        'cli/bower_components/angular/angular.js'
+                        'cli/bower_components/angular/angular.js',
+                        'public/js/template-cache.js',
+                        'cli/app/**/*.js'
                     ]
                 }
             },
@@ -21,10 +23,33 @@ module.exports = function(grunt) {
                     ]
                 }
             }
+        },
+        jshint: {
+            files: ['cli/app/**/*.js'],
+            options: {
+                jshintrc: '.jshintrc'
+            }
+        },
+        ngtemplates: {
+            app: {
+                cwd: 'cli/app',
+                src: '**/*.html',
+                dest: 'public/js/template-cache.js'
+            }
+        },
+        ngmin: {
+            js: {
+                src: 'public/js/app.js',
+                dest: 'public/js/app.js'
+            }
         }
+
     });
 
+    grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-concat-sourcemap');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-ngmin');
 
     grunt.registerTask('server', function() {
         grunt.log.writeln('Starting server...');
@@ -60,5 +85,8 @@ module.exports = function(grunt) {
     //common: ["jshint", "handlebars", "jst", "concat_sourcemap", "copy:dev", "images:dev", "webfonts:dev", "pages:dev"]
 
     grunt.registerTask('default', []);//???
-    grunt.registerTask('run', ['page', 'concat_sourcemap', 'server']); //TODO add tasks to build client
+    grunt.registerTask('run', ['jshint', 'page',
+        'ngtemplates', 'concat_sourcemap', 'ngmin', 'server']);
+
+
 };

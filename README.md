@@ -13,10 +13,6 @@ TODO
 
 Development environment set up:
 
-* create grunt task to build app.js
- - concat
- - ng-temlates
-* create grunt task to build app.css
 * add karma support
 
 

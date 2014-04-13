@@ -24,6 +24,9 @@
     "lodash": "^2.4.1"
   },
   "devDependencies": {
-    "grunt-concat-sourcemap": "^0.4.1"
+    "grunt-concat-sourcemap": "^0.4.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-angular-templates": "^0.5.4",
+    "grunt-ngmin": "0.0.3"
   }
 }
