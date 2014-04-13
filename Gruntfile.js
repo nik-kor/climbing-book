@@ -1,12 +1,24 @@
 module.exports = function(grunt) {
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json')
+        pkg: grunt.file.readJSON('package.json'),
         concat_sourcemap: {
-            options: {},
-            target: {
+            options: {
+                sourcesContent: true
+            },
+            js: {
                 files: {
-                    'public/app.js': ['src/a.js', 'src/b.js']
+                    'public/js/app.js': [
+                        'cli/bower_components/jquery/dist/jquery.js',
+                        'cli/bower_components/angular/angular.js'
+                    ]
+                }
+            },
+            css: {
+                files: {
+                    'public/css/app.css': [
+                        'cli/bower_components/fullcalendar/fullcalendar.css'
+                    ]
                 }
             }
         }
@@ -48,5 +60,5 @@ module.exports = function(grunt) {
     //common: ["jshint", "handlebars", "jst", "concat_sourcemap", "copy:dev", "images:dev", "webfonts:dev", "pages:dev"]
 
     grunt.registerTask('default', []);//???
-    grunt.registerTask('run', ['page', 'server']); //TODO add tasks to build client
+    grunt.registerTask('run', ['page', 'concat_sourcemap', 'server']); //TODO add tasks to build client
 };
