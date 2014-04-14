@@ -19,14 +19,14 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
             center: 'title',
             right: 'today prev,next'
         },
-        dayClick: $scope.alertEventOnClick,
+        // dayClick: $scope.alertEventOnClick,
         eventDrop: $scope.alertOnDrop,
         eventResize: $scope.alertOnResize,
         dayRender: function(date, cell) {
             $('.fc-day-content', cell).html($templateCache.get('calendar/day.html'));
             console.log(date, cell);
         },
-        dayClick: function(date, allDay, jsEvent, view) {
+        dayClick: function(/*date, allDay, jsEvent, view*/) {
             //TODO render popup window
             //
             $('#myModal').modal();
