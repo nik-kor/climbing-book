@@ -71,9 +71,26 @@ module.exports = function(grunt) {
             ngtemplates: {
                 files: 'cli/app/**/*.html',
                 tasks: ['ngtemplates', 'concat_sourcemap:js']
+            },
+            server: {
+                files: ['server/**/*.js'],
+                tasks: ['express:dev'],
+                options: {
+                    spawn: false
+                }
+            }
+        },
+        express: {
+            options: {
+                // background: false,
+                port: 3000
+            },
+            dev: {
+                options: {
+                    script: 'server/index.js'
+                }
             }
         }
-
     });
 
     grunt.loadNpmTasks('grunt-angular-templates');
@@ -81,30 +98,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-ngmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-express-server');
 
-    grunt.registerTask('server', function() {
-        grunt.log.writeln('Starting server...');
-
-        var spawn = require('child_process').spawn,
-            done = this.async(),
-            server;
-
-        server = spawn('node', ['server/index.js']);
-
-        server.stdout.on('data', function(data) {
-            grunt.log.write(data);
-        });
-
-        server.stderr.on('data', function(data) {
-            grunt.log.write(data);
-        });
-
-        server.on('close', function() {
-            done();
-        });
-
-        done();//works fine with watch task
-    });
 
     grunt.registerTask('page', 'generate index.html', function() {
         var _ = require('lodash'),
@@ -116,9 +111,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', []);//???
     grunt.registerTask('run', ['jshint', 'page',
-        'ngtemplates', 'concat_sourcemap', 'server', 'watch']);
+        'ngtemplates', 'concat_sourcemap', 'express:dev', 'watch']);
 
     //TODO
     grunt.registerTask('build', ['ngmin']);
-
 };

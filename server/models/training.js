@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 
+var db = mongoose.connect('mongodb://localhost/climbing-book');
+
+
 
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
@@ -13,9 +16,10 @@ var CLIBMING_TYPE = {
 
 var Climbing = new Schema({
     type: String, //CLIMBING_TYPE
-    grade: Number,
+    grade: String, //e.g. 5a, 7c, 8a+, etc.
     plus_down: Boolean,
-    series: ObjectId //series id
+    series: ObjectId, //series id
+    note: String
 });
 
 
@@ -26,3 +30,6 @@ var Training = new Schema({
     desc: String,
     mark: Number
 });
+
+
+module.exports = db.model('training', Training);
