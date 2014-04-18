@@ -7,15 +7,11 @@ var express = require('express'),
 app.use(bodyParser());
 app.use(express.static(__dirname + '/../public'));
 
-// mongoose.connect('mongodb://localhost/climbing-book', function(err) {
-//     if(err) {
-//         console.log(err);
-//     }
-// });
-
 
 var Training = require('./models/training');
 
+//curl -v -X POST -H "Content-Type: application/json" -d '{"warm_up": "some worm uppppp", "desc": "everything seeems ok", "climbings": [{"type": "bottom", "series": [{"grade": "5c", "plus_down": false}, {"grade": "5a", "plus_down": true}]}]}' http://localhost:3000/api/training
+//
 app.post('/api/training', function(req, res) {
     var training = new Training(req.body);
     training.save(function(err) {
