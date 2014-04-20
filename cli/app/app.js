@@ -1,4 +1,4 @@
-angular.module('app', ['ngRoute', 'calendar'])
+angular.module('app', ['ngRoute', 'ui.bootstrap','calendar'])
 
 .config(function($routeProvider) {
     $routeProvider.otherwise({redirectTo: '/calendar'});

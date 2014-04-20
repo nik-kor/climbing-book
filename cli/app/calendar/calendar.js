@@ -7,7 +7,7 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
     });
 })
 
-.controller('CalendarController', function($scope, $templateCache) {
+.controller('CalendarController', function($scope, $templateCache, $modal) {
 
     $scope.calendar_config = {
         firstDay: 1,
@@ -19,7 +19,6 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
             center: 'title',
             right: 'today prev,next'
         },
-        // dayClick: $scope.alertEventOnClick,
         eventDrop: $scope.alertOnDrop,
         eventResize: $scope.alertOnResize,
         dayRender: function(date, cell) {
@@ -27,12 +26,28 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
             console.log(date, cell);
         },
         dayClick: function(/*date, allDay, jsEvent, view*/) {
-            //TODO render popup window
-            //
-            $('#myModal').modal();
-            $(this).css('background-color', 'grey');
+            var modalInstance = $modal.open({
+                template: $templateCache.get('calendar/day_modal.html'),
+                controller: 'TrainingPopupController'
+            });
+            modalInstance.result.then(
+                function () {
+                    //do smth
+                }
+            );
+            // $(this).css('background-color', 'grey');
         }
     };
 
     $scope.eventSources = {};
+})
+.controller('TrainingPopupController', function($scope, $modalInstance) {
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 });
