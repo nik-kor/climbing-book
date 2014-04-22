@@ -12,9 +12,10 @@ Development environment set up:
 
 Features:
 
+* Add flash messages notifier - maybe "angular-flash"
 * New training adding with very simple controls
- - create form
- - implement POST /api/trainings
+ - [DONE - 70%]create form
+ - [DONE - 100%]implement POST /api/trainings
 * Render already added trainings to calendar
  - FE
  - GET /api/trainings

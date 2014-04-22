@@ -20,8 +20,9 @@ var Training = new Schema({
     climbings: [Climbing],
     stretching: Boolean,
     desc: String,
-    mark: Number,
-    date: {type: Date, required: true}
+    rate: Number,
+    date: {type: Date, required: true},
+    exercises: String
 });
 
 

@@ -101,6 +101,18 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-express-server');
 
+    grunt.registerTask('fonts', function() {
+        var fs = require('fs'),
+            fontsDir = 'cli/bower_components/bootstrap/dist/fonts/',
+            publicDir = 'public/fonts/';
+
+        grunt.file.mkdir(publicDir);
+
+        fs.readdirSync(fontsDir).forEach(function(file) {
+            grunt.log.writeln('Copying ' + fontsDir + file + ' to ' + publicDir + file);
+            grunt.file.copy(fontsDir + file,  publicDir + file);
+        });
+    });
 
     grunt.registerTask('page', 'generate index.html', function() {
         var _ = require('lodash'),
@@ -111,7 +123,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('default', []);//???
-    grunt.registerTask('run', ['jshint', 'page',
+    grunt.registerTask('run', ['jshint', 'page', 'fonts',
         'ngtemplates', 'concat_sourcemap', 'express:dev', 'watch']);
 
     //TODO

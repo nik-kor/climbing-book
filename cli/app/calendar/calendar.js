@@ -31,8 +31,9 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
                 controller: 'TrainingPopupController'
             });
             modalInstance.result.then(
-                function () {
-                    //do smth
+                function (res) {
+                    console.log('Got results from modal', res);
+                    //TODO add taining to calendar grid
                 }
             );
             // $(this).css('background-color', 'grey');
@@ -41,13 +42,35 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
 
     $scope.eventSources = {};
 })
-.controller('TrainingPopupController', function($scope, $modalInstance) {
 
-    $scope.ok = function () {
-        $modalInstance.close($scope.selected.item);
+.controller('TrainingPopupController', function($scope, $modalInstance, $http) {
+
+    $scope.max_rate = 10;
+
+    $scope.training = {
+        rate: 0
+    };
+
+    $scope.hoveringOver = function(value) {
+        $scope.percent = 100 * (value / $scope.max_rate);
+        $scope.training.rate = value;
     };
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+
+    $scope.save = function(training) {
+        training.date = Date.now();
+
+        $http.post('/api/trainings', training).then(
+            function(res) {
+                $modalInstance.close(res.data);
+            },
+            function(err) {
+                console.error(err);
+            }
+        );
+    };
+
 });
