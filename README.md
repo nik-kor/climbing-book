@@ -12,7 +12,6 @@ Development environment set up:
 
 Features:
 
-* Add flash messages notifier - maybe "angular-flash"
 * New training adding with very simple controls
  - [DONE - 70%]create form
  - [DONE - 100%]implement POST /api/trainings

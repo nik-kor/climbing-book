@@ -7,8 +7,7 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
     });
 })
 
-.controller('CalendarController', function($scope, $templateCache, $modal) {
-
+.controller('CalendarController', function($scope, $templateCache, $modal, flash) {
     $scope.calendar_config = {
         firstDay: 1,
         weekNumbers: true,
@@ -33,7 +32,11 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
             modalInstance.result.then(
                 function (res) {
                     console.log('Got results from modal', res);
+                    flash.success = 'Training for ' + res.date + ' saved';
                     //TODO add taining to calendar grid
+                },
+                function(err) {
+                    flash.error = err;
                 }
             );
             // $(this).css('background-color', 'grey');
