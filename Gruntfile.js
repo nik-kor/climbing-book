@@ -1,5 +1,12 @@
 module.exports = function(grunt) {
 
+    var karmaConfig = function(configFile, customOptions) {
+        var options = { configFile: configFile, keepalive: true };
+        var travisOptions = process.env.TRAVIS && { browsers: ['Firefox'], reporters: 'dots' };
+        return grunt.util._.extend(options, customOptions, travisOptions);
+    };
+
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         app_js_path: 'cli/app/**/*.js',
@@ -92,6 +99,10 @@ module.exports = function(grunt) {
                     script: 'server/index.js'
                 }
             }
+        },
+        karma: {
+            unit: { options: karmaConfig('cli/test/config/unit.js') },
+            watch: { options: karmaConfig('cli/test/config/unit.js', { singleRun: false, autoWatch: true}) }
         }
     });
 
@@ -101,6 +112,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ngmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-express-server');
+    grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('fonts', function() {
         var fs = require('fs'),

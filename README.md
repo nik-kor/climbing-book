@@ -7,8 +7,7 @@ TODO
 
 Development environment set up:
 
-* add karma support
-
+--no tasks--
 
 Features:
 
