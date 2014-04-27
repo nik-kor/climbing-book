@@ -36,7 +36,7 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
                     //TODO add taining to calendar grid
                 },
                 function(err) {
-                    flash.error = err;
+                    console.log(err);
                 }
             );
             // $(this).css('background-color', 'grey');
@@ -46,12 +46,18 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
     $scope.eventSources = {};
 })
 
-.controller('TrainingPopupController', function($scope, $modalInstance, $http) {
+.controller('TrainingPopupController', function($scope, $modalInstance, $http, flash) {
 
     $scope.max_rate = 10;
+    $scope.error_container_id = 'error_message';
 
     $scope.training = {
         rate: 0
+    };
+
+
+    $scope.climbing = {
+        attemptes: []
     };
 
     $scope.hoveringOver = function(value) {
@@ -71,7 +77,8 @@ angular.module('calendar', ['ngRoute', 'ui.calendar'])
                 $modalInstance.close(res.data);
             },
             function(err) {
-                console.error(err);
+                flash.to($scope.error_container_id).error = err.data;
+                // $modalInstance.dismiss(err);
             }
         );
     };

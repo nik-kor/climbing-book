@@ -11,7 +11,7 @@ var Attempt = new Schema({
 
 var Climbing = new Schema({
     type: {type: String, required: true, enum: ['top', 'bottom', 'bouldering'] },
-    series: [Attempt],
+    attempts: [Attempt],
     note: String
 });
 
@@ -23,6 +23,14 @@ var Training = new Schema({
     rate: Number,
     date: {type: Date, required: true},
     exercises: String
+});
+
+Training.pre('save', function(next) {
+    if(this.climbings.length === 0) {
+        return next(new Error('Climbings are required'));
+    }
+
+    next();
 });
 
 

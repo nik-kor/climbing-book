@@ -16,7 +16,7 @@ app.post('/api/trainings', function(req, res) {
     var training = new Training(req.body);
     training.save(function(err) {
         if(err) {
-            res.json(500, err);
+            res.json(400, err.message);
         } else {
             res.json(200, training);
         }
