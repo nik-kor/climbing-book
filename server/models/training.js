@@ -5,7 +5,7 @@ var db = mongoose.connect('mongodb://localhost/climbing-book');
 var Schema = mongoose.Schema;
 
 var Attempt = new Schema({
-    grade: {type: String, required: true}, //e.g. 5a, 7c, 8a+, etc.
+    difficulty: {type: String, required: true}, //e.g. 5a, 7c, 8a+, etc.
     plus_down: {type: Boolean, default: false}
 });
 
