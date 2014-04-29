@@ -30,18 +30,9 @@
                     Attempts
                 </div>
                 <div class='col-sm-8'>
-                    <ul>
-                        <li>
-                            <select ng-model='difficulty'
-                                ng-options='difficulty.name for difficulty in difficulties'></select>
-                            {{difficulty}}
-                        </li>
-                        <li>
-
-                        </li>
-                    </ul>
+                    <ul class='attempts'></ul>
                     <!-- <add-attempt-button></add-attempt-button> -->
-                    <button type="button" class="btn btn-default btn-sm" add-attempt>
+                    <button type="button" class="btn btn-default btn-sm" add-attempt='ul.attempts'>
                         <span class="glyphicon glyphicon-plus"></span> Add
                     </button>
                 </div>

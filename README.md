@@ -5,10 +5,6 @@ Climbing book
 TODO
 -----
 
-Development environment set up:
-
---no tasks--
-
 Features:
 
 * New training adding with very simple controls

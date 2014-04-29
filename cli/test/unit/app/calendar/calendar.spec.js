@@ -1,5 +1,4 @@
 describe('Calendar', function() {
-
     beforeEach(module('calendar'));
     beforeEach(module('ui.bootstrap'));
     beforeEach(module('templates'));

@@ -58,19 +58,6 @@ angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.add_attempt
 
     // $scope.difficulty = null;
 
-    $scope.difficulties = [
-        {name: '5a', weight: 1},
-        {name: '5a+', weight: 1.1},
-        {name: '5a+/5b', weight: 1.2},
-        {name: '5b', weight: 1.3},
-        {name: '5b+', weight: 1.4},
-        {name: '5c', weight: 1.5},
-        {name: '6a', weight: 1.6},
-        {name: '6b', weight: 1.7},
-        {name: '6c', weight: 1.8}
-    ];
-
-
     $scope.climbing = {
         attemptes: []
     };
