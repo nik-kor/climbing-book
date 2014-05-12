@@ -1,9 +1,13 @@
-angular.module('cb.directives.add_attempt', [])
+angular.module('cb.directives.attempts', [])
 
-.directive('addAttempt', function($templateCache, $compile) {
+.directive('attempts', function($templateCache, $compile) {
 
     return {
-        restrict: 'A',
+        restrict: 'EA',
+        scope: {
+            climbing: '='
+        },
+        templateUrl: 'calendar/directives/attempts.html',
 
         link: function(scope, element, attrs) {
             var difficulties = [
@@ -18,13 +22,22 @@ angular.module('cb.directives.add_attempt', [])
                 {name: '6c', weight: 1.8}
             ];
 
-
-            element.click(function(e) {
+            element.find('.add-button').click(function(e) {
                 e.stopPropagation();
                 scope.difficulties = angular.copy(difficulties);
-                $(attrs.addAttempt).append(
+                scope.attempt = {
+                    difficulty: '',
+                    plus_down: false
+                };
+
+                element.find('ul').append(
                     $compile($templateCache.get('calendar/directives/attempt.html'))(scope)
                 );
+            });
+
+            element.find('.remove-button').live('click', function(e) {
+                e.stopPropagation();
+                console.log('remove item');
             });
         }
     };

@@ -1,4 +1,4 @@
-angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.add_attempt'])
+angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.attempts'])
 
 .config(function($routeProvider) {
     $routeProvider.when('/calendar', {
@@ -59,7 +59,7 @@ angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.add_attempt
     // $scope.difficulty = null;
 
     $scope.climbing = {
-        attemptes: []
+        attempts: []
     };
 
     $scope.hoveringOver = function(value) {

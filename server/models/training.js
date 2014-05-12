@@ -10,7 +10,7 @@ var Attempt = new Schema({
 });
 
 var Climbing = new Schema({
-    type: {type: String, required: true, enum: ['top', 'bottom', 'bouldering'] },
+    belay: {type: String, required: true, enum: ['top', 'bottom', 'bouldering'] },
     attempts: [Attempt],
     note: String
 });
