@@ -1,4 +1,15 @@
-<ul></ul>
-<button type="button" class="btn btn-default btn-sm add-button">
-    <span class="glyphicon glyphicon-plus"></span> Add
-</button>
+<ul>
+    <!-- already added attempts -->
+</ul>
+
+
+<div class='new-item'>
+    <select ng-model='new_attempt.difficulty'
+        ng-options='difficulty.name for difficulty in difficulties'></select>
+    {{difficulty}}
+    <input type='checkbox' ng-model='new_attempt.plus_down' />Down?
+
+    <button type="button" class="btn btn-default btn-sm add-button">
+        <span class="glyphicon glyphicon-plus"></span> Add
+    </button>
+</div>

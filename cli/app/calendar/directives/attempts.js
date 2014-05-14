@@ -1,16 +1,30 @@
 angular.module('cb.directives.attempts', [])
 
+/**
+ * Dev notes:
+ * -----------
+ * Elements:
+ *  - one add button. Adds new attempt to scope.climbing attempts collection
+ *  - one element for creating new Attempt
+ *  - collection of already added attempts. With possibility to
+ *   - delete
+ *   - edit fields
+ *
+ * Look at http://todomvc.com/architecture-examples/angularjs/#/active for examples
+ */
 .directive('attempts', function($templateCache, $compile) {
 
     return {
         restrict: 'EA',
+
         scope: {
             climbing: '='
         },
+
         templateUrl: 'calendar/directives/attempts.html',
 
         link: function(scope, element, attrs) {
-            var difficulties = [
+            scope.difficulties = [
                 {name: '5a', weight: 1},
                 {name: '5a+', weight: 1.1},
                 {name: '5a+/5b', weight: 1.2},
@@ -22,22 +36,24 @@ angular.module('cb.directives.attempts', [])
                 {name: '6c', weight: 1.8}
             ];
 
+            //TODO
             element.find('.add-button').click(function(e) {
                 e.stopPropagation();
-                scope.difficulties = angular.copy(difficulties);
+
                 scope.attempt = {
                     difficulty: '',
                     plus_down: false
                 };
 
-                element.find('ul').append(
-                    $compile($templateCache.get('calendar/directives/attempt.html'))(scope)
-                );
-            });
+                scope.climbing.push(scope.attempt);
 
-            element.find('.remove-button').live('click', function(e) {
-                e.stopPropagation();
-                console.log('remove item');
+                var newAttempt = $compile($templateCache.get('calendar/directives/attempt.html'))(scope);
+
+                newAttempt.appendTo(element.find('ul')).find('.remove-button').click(function(e) {
+                    e.stopPropagation();
+
+                    angular.element(e.currentTarget).parents('li').remove();
+                });
             });
         }
     };
