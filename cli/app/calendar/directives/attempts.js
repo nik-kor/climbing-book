@@ -12,7 +12,7 @@ angular.module('cb.directives.attempts', [])
  *
  * Look at http://todomvc.com/architecture-examples/angularjs/#/active for examples
  */
-.directive('attempts', function($templateCache, $compile) {
+.directive('attempts', function() {
 
     return {
         restrict: 'EA',
@@ -23,7 +23,8 @@ angular.module('cb.directives.attempts', [])
 
         templateUrl: 'calendar/directives/attempts.html',
 
-        link: function(scope, element, attrs) {
+        link: function(scope/*, element*/) {
+
             scope.difficulties = [
                 {name: '5a', weight: 1},
                 {name: '5a+', weight: 1.1},
@@ -36,25 +37,28 @@ angular.module('cb.directives.attempts', [])
                 {name: '6c', weight: 1.8}
             ];
 
-            //TODO
-            element.find('.add-button').click(function(e) {
-                e.stopPropagation();
-
-                scope.attempt = {
+            var flashNewAttempt = function() {
+                scope.new_attempt = {
                     difficulty: '',
                     plus_down: false
                 };
+            };
 
-                scope.climbing.push(scope.attempt);
+            flashNewAttempt();
 
-                var newAttempt = $compile($templateCache.get('calendar/directives/attempt.html'))(scope);
+            scope.addAttempt = function() {
+                //TODO - add validation
+                // if(scope.new_attempt.difficulty === '') {
+                //     return;
+                // }
 
-                newAttempt.appendTo(element.find('ul')).find('.remove-button').click(function(e) {
-                    e.stopPropagation();
+                scope.climbing.push(angular.copy(scope.new_attempt));
+                flashNewAttempt();
+            };
 
-                    angular.element(e.currentTarget).parents('li').remove();
-                });
-            });
+            scope.removeAttempt = function(attempt) {
+                scope.climbing.splice(scope.climbing.indexOf(attempt), 1);
+            };
         }
     };
 });
