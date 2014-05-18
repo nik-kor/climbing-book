@@ -25,17 +25,7 @@ angular.module('cb.directives.climbing-attempts', [])
 
         link: function(scope/*, element*/) {
 
-            scope.difficulties = [
-                {name: '5a', weight: 1},
-                {name: '5a+', weight: 1.1},
-                {name: '5a+/5b', weight: 1.2},
-                {name: '5b', weight: 1.3},
-                {name: '5b+', weight: 1.4},
-                {name: '5c', weight: 1.5},
-                {name: '6a', weight: 1.6},
-                {name: '6b', weight: 1.7},
-                {name: '6c', weight: 1.8}
-            ];
+            scope.difficulties = ['5a', '5a+', '5a+/5b', '5b', '5b+', '5c', '6a', '6b', '6c'];
 
             var flashNewAttempt = function() {
                 scope.new_attempt = {
@@ -46,13 +36,17 @@ angular.module('cb.directives.climbing-attempts', [])
 
             flashNewAttempt();
 
-            scope.addAttempt = function() {
-                //TODO - add validation
-                // if(scope.new_attempt.difficulty === '') {
-                //     return;
-                // }
+            scope.addAttempt = function(new_attempt) {
+                if(new_attempt.difficulty === '') {
+                    //TODO - show warning
+                    return;
+                }
 
-                scope.attempts.push(angular.copy(scope.new_attempt));
+                if(typeof new_attempt.plus_down === 'undefined') {
+                    new_attempt.plus_down = false;
+                }
+
+                scope.attempts.push(new_attempt);
                 flashNewAttempt();
             };
 
