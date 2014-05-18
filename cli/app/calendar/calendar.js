@@ -1,4 +1,4 @@
-angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.attempts'])
+angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.climbing-attempts'])
 
 .config(function($routeProvider) {
     $routeProvider.when('/calendar', {

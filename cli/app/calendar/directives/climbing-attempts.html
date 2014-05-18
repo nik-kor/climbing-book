@@ -1,0 +1,20 @@
+<ul>
+    <li ng-repeat='attempt in attempts' class='added'>
+        <select ng-model='attempt.difficulty'
+            ng-options='difficulty.name for difficulty in difficulties'></select>
+        <input type='checkbox' ng-model='attempt.plus_down' />Down?
+
+        <button type="button" ng-click='removeAttempt(attempt)' class="btn btn-default btn-sm remove-button">
+            <span class="glyphicon glyphicon-trash"></span>
+        </button>
+    </li>
+    <li>
+        <select ng-model='new_attempt.difficulty'
+            ng-options='difficulty.name for difficulty in difficulties'></select>
+        <input type='checkbox' ng-model='new_attempt.plus_down' />Down?
+
+        <button type="button" ng-click='addAttempt()' class="btn btn-default btn-sm add-button">
+            <span class="glyphicon glyphicon-plus"></span> Add
+        </button>
+    </li>
+</ul>

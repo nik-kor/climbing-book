@@ -1,4 +1,4 @@
-angular.module('cb.directives.attempts', [])
+angular.module('cb.directives.climbing-attempts', [])
 
 /**
  * Dev notes:
@@ -12,16 +12,16 @@ angular.module('cb.directives.attempts', [])
  *
  * Look at http://todomvc.com/architecture-examples/angularjs/#/active for examples
  */
-.directive('attempts', function() {
+.directive('climbingAttempts', function() {
 
     return {
         restrict: 'EA',
 
         scope: {
-            climbing: '='
+            attempts: '='
         },
 
-        templateUrl: 'calendar/directives/attempts.html',
+        templateUrl: 'calendar/directives/climbing-attempts.html',
 
         link: function(scope/*, element*/) {
 
@@ -52,12 +52,12 @@ angular.module('cb.directives.attempts', [])
                 //     return;
                 // }
 
-                scope.climbing.push(angular.copy(scope.new_attempt));
+                scope.attempts.push(angular.copy(scope.new_attempt));
                 flashNewAttempt();
             };
 
             scope.removeAttempt = function(attempt) {
-                scope.climbing.splice(scope.climbing.indexOf(attempt), 1);
+                scope.attempts.splice(scope.attempts.indexOf(attempt), 1);
             };
         }
     };
