@@ -1,21 +1,9 @@
 angular.module('cb.directives.climbing-attempts', [])
 
-/**
- * Dev notes:
- * -----------
- * Elements:
- *  - one add button. Adds new attempt to scope.climbing attempts collection
- *  - one element for creating new Attempt
- *  - collection of already added attempts. With possibility to
- *   - delete
- *   - edit fields
- *
- * Look at http://todomvc.com/architecture-examples/angularjs/#/active for examples
- */
 .directive('climbingAttempts', function() {
 
     return {
-        restrict: 'EA',
+        restrict: 'E',
 
         scope: {
             attempts: '='
@@ -27,14 +15,14 @@ angular.module('cb.directives.climbing-attempts', [])
 
             scope.difficulties = ['5a', '5a+', '5a+/5b', '5b', '5b+', '5c', '6a', '6b', '6c'];
 
-            var flashNewAttempt = function() {
+            var clearNewAttempt = function() {
                 scope.new_attempt = {
                     difficulty: '',
                     plus_down: false
                 };
             };
 
-            flashNewAttempt();
+            clearNewAttempt();
 
             scope.addAttempt = function(new_attempt) {
                 if(new_attempt.difficulty === '') {
@@ -47,7 +35,7 @@ angular.module('cb.directives.climbing-attempts', [])
                 }
 
                 scope.attempts.push(new_attempt);
-                flashNewAttempt();
+                clearNewAttempt();
             };
 
             scope.removeAttempt = function(attempt) {

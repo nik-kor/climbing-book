@@ -1,4 +1,4 @@
-angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.climbing-attempts'])
+angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.training-climbings'])
 
 .config(function($routeProvider) {
     $routeProvider.when('/calendar', {
@@ -22,7 +22,7 @@ angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.climbing-at
         eventResize: $scope.alertOnResize,
         dayRender: function(date, cell) {
             $('.fc-day-content', cell).html($templateCache.get('calendar/day.html'));
-            console.log(date, cell);
+            // console.log(date, cell);
         },
         dayClick: function(/*date, allDay, jsEvent, view*/) {
             var modalInstance = $modal.open({

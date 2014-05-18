@@ -7,9 +7,9 @@ TODO
 
 Features:
 
-* New training adding with very simple controls
- - [DONE - 70%]create form
- - [DONE - 100%]implement POST /api/trainings
+* New climging adding to training
+ - integrate with backend
+
 * Render already added trainings to calendar
  - FE
  - GET /api/trainings

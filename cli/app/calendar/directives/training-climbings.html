@@ -1,0 +1,29 @@
+<ul>
+    <li ng-repeat='climbing in climbings' class='added'>
+        <a ng-click='edit(climbing)' ng-show='!isEditable(climbing)'> {{climbing.belay}}&nbsp;
+            <span ng-repeat='attempt in climbing.attempts'>
+                {{attempt.difficulty}}<span ng-show='attempt.plus_down'>/+down</span>
+            </span>
+        </a>
+
+        <button type="button" ng-show='isEditable(climbing)' ng-click='edited(climbing)' class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-ok"></span>
+        </button>
+
+        <button type="button" ng-click='remove(climbing)' class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-trash"></span>
+        </button>
+        <training-climbing climbing='climbing' ng-show='isEditable(climbing)' />
+    </li>
+    <li class='new'>
+        <div class='row'>
+            <training-climbing climbing='new_climbing' />
+        </div>
+        <div class='row'>
+            <button type="button" ng-click='add(new_climbing)' class="btn btn-default btn-sm add-button">
+                <span class="glyphicon glyphicon-plus"></span> Add
+            </button>
+        </div>
+    </li>
+
+</ul>
