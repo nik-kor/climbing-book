@@ -26,6 +26,7 @@ module.exports = function(grunt) {
                         'cli/bower_components/angular-ui-calendar/src/calendar.js',
                         'cli/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
                         'cli/bower_components/angular-flash/dist/angular-flash.js',
+                        'cli/bower_components/angular-resource/angular-resource.js',
                         'cli/app/bootstrap.js',
                         '<%= app_js_path %>',
                         'public/js/template-cache.js',

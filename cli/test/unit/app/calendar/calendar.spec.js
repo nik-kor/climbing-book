@@ -10,7 +10,8 @@ describe('Calendar', function() {
         function createLocals() {
             return {
                 $scope: {},
-                flash: {}
+                flash: {},
+                trainings: []
             };
         }
 

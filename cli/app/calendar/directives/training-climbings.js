@@ -64,7 +64,7 @@ angular.module('cb.directives.training-climbings', ['cb.directives.climbing-atte
             climbing: '='
         },
 
-        link: function(scope) {
+        link: function() {
 
         }
     };
