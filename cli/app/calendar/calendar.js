@@ -1,12 +1,13 @@
-angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.training-climbings', 'resources.trainings'])
+angular.module('calendar', ['ngRoute', 'ui.calendar',
+                            'cb.directives.training-climbings', 'resources.trainings'])
 
 .config(function($routeProvider) {
     $routeProvider.when('/calendar', {
         templateUrl: 'calendar/calendar.html',
         controller: 'CalendarController',
         resolve: {
-            trainings: function(Trainings) {
-                return Trainings.query();
+            trainings: function(trainings) {
+                return trainings.all();
             }
         }
     });
@@ -29,7 +30,8 @@ angular.module('calendar', ['ngRoute', 'ui.calendar', 'cb.directives.training-cl
         eventDrop: $scope.alertOnDrop,
         eventResize: $scope.alertOnResize,
         dayRender: function(date, cell) {
-            $scope.trainings.getByDate(date);
+            var tr = $scope.trainings.getByDate(date);
+            console.log(tr);
             $('.fc-day-content', cell).html($templateCache.get('calendar/day.html'));
             // console.log(date, cell);
         },
