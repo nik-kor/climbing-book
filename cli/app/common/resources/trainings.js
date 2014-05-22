@@ -2,19 +2,9 @@ angular.module('resources.trainings', [])
 
 .factory('trainings', function($http, $q) {
 
-    var _trainings = [],
+
+    var trainings = {},
         _defer;
-
-    var trainings = {};
-
-
-    trainings.getByDate = function(date) {
-        return _trainings.filter(function(tr) {
-            return tr.date.getFullYear() === date.getFullYear()
-                && tr.date.getMonth() === date.getMonth()
-                && tr.date.getDate() === date.getDate();
-        });
-    };
 
     trainings.all = function() {
         if(_defer) {
@@ -28,8 +18,8 @@ angular.module('resources.trainings', [])
             data.forEach(function(tr) {
                 tr.date = new Date(tr.date);
             });
-            _trainings = data;
-            _defer.resolve(trainings);
+
+            _defer.resolve(data);
         })
         .error(function(err) {
             _defer.reject(err);

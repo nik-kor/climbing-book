@@ -1,5 +1,6 @@
 angular.module('calendar', ['ngRoute', 'ui.calendar',
-                            'cb.directives.training-climbings', 'resources.trainings'])
+                            'cb.directives.training-climbings',
+                            'resources.trainings', 'cb.directives.training-event'])
 
 .config(function($routeProvider) {
     $routeProvider.when('/calendar', {
@@ -13,7 +14,7 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
     });
 })
 
-.controller('CalendarController', function($scope, $templateCache, $modal, flash, trainings) {
+.controller('CalendarController', function($scope, $templateCache, $modal, flash, trainings, $compile) {
 
     $scope.trainings = trainings;
 
@@ -27,18 +28,24 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
             center: 'title',
             right: 'today prev,next'
         },
-        eventDrop: $scope.alertOnDrop,
-        eventResize: $scope.alertOnResize,
-        dayRender: function(date, cell) {
-            var tr = $scope.trainings.getByDate(date);
-            console.log(tr);
-            $('.fc-day-content', cell).html($templateCache.get('calendar/day.html'));
-            // console.log(date, cell);
+        eventRender: function(event, element) {
+
+            // console.log(event, element);
+            var scope = $scope.$new(true);
+            scope.training = event;
+            var eventElem = $compile('<training-event training="training" />')(scope);
+            element.html(eventElem);
         },
+        // eventDrop: $scope.alertOnDrop,
+        // eventResize: $scope.alertOnResize,
         dayClick: function(/*date, allDay, jsEvent, view*/) {
             var modalInstance = $modal.open({
                 template: $templateCache.get('calendar/day_modal.html'),
                 controller: 'TrainingPopupController'
+            });
+            $scope.eventSources[0].events.push({
+                title: 'some',
+                start: '2014-05-01'
             });
             modalInstance.result.then(
                 function (res) {
@@ -51,10 +58,16 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
                 }
             );
             // $(this).css('background-color', 'grey');
-        }
+        },
+        startParam: 'date'
     };
 
-    $scope.eventSources = {};
+    $scope.eventSources = [{
+        events: $scope.trainings,
+        backgroundColor: 'white',
+        borderColor: 'white',
+        textColor: 'black'
+    }];
 })
 
 .controller('TrainingPopupController', function($scope, $modalInstance, $http, flash) {
