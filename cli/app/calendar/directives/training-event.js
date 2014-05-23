@@ -1,6 +1,6 @@
 angular.module('cb.directives.training-event', [])
 
-.directive('trainingEvent', function() {
+.directive('trainingEvent', function(trainingModal, Trainings) {
 
     return {
         restrict: 'E',
@@ -10,21 +10,15 @@ angular.module('cb.directives.training-event', [])
 
         templateUrl: 'calendar/directives/training-event.html',
 
-        link: function(scope, element) {
-
-            console.log(scope, element);
+        link: function(scope) {
 
             scope.delete = function(training) {
-                console.log('DELETE /api/trainings/%s', training._id);
+                Trainings.delete(training);
             };
 
-            scope.edit = function(training) {
-                //TODO open modal window
-                console.log('PUT /api/trainings/%s', training._id);
+            scope.edit = function() {
+                trainingModal.open(scope);
             };
         }
-
     };
-
-
 });

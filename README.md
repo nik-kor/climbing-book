@@ -7,9 +7,8 @@ TODO
 
 Features:
 
-* Render already added trainings to calendar
- - FE
- - GET /api/trainings
-* Read training details(with editing support)
- - FE
- - GET /api/trainings/<training-id>
+- PUT /api/trainings/:id
+- DELETE /api/trainings/:id
+- think about events(trainings) collection in the whole arch
+ - how to use it to render new events
+ - how to navigate between months

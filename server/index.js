@@ -49,6 +49,17 @@ app.get('/api/trainings', function(req, res) {
     });
 });
 
+app.put('/api/trainings/:id', function(req, res) {
+    //TODO
+    res.json(200, {});
+
+});
+
+
+app.delete('/api/trainings/:id', function(req, res) {
+    res.json(200, {delete: 'TODO'});
+});
+
 
 console.log('Listening on port 3000');
 

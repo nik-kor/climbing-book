@@ -1,6 +1,6 @@
 angular.module('resources.trainings', [])
 
-.factory('trainings', function($http, $q) {
+.factory('Trainings', function($http, $q) {
 
 
     var trainings = {},
@@ -26,6 +26,29 @@ angular.module('resources.trainings', [])
         });
 
         return _defer.promise;
+    };
+
+    var normilizeTraining = function(source) {
+        return {
+            warm_up: source.warm_up,
+            climbings: source.climbings,
+            stretching: source.stretching,
+            desc: source.desc,
+            rate: source.rate,
+            date: source.start.getTime(),
+            exercises: source.exercises
+        };
+    };
+
+    trainings.save = function(training) {
+        return training._id
+            ? $http.put('/api/trainings/' + training._id, normilizeTraining(training))
+            : $http.post('/api/trainings', normilizeTraining(training));
+    };
+
+
+    trainings.delete = function(training) {
+        return $http.delete('/api/trainings/' + training._id);
     };
 
 
