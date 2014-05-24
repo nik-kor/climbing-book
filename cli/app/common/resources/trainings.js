@@ -35,7 +35,7 @@ angular.module('resources.trainings', [])
             stretching: source.stretching,
             desc: source.desc,
             rate: source.rate,
-            date: source.start.getTime(),
+            date: typeof source.date === 'object' ?  source.date.getTime() : source.date,
             exercises: source.exercises
         };
     };

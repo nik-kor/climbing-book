@@ -25,9 +25,9 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
         height: 600,
         editable: true,
         header:{
-            left: 'month basicWeek basicDay agendaWeek agendaDay',
+            left: 'today prev,next',
             center: 'title',
-            right: 'today prev,next'
+            right: ''
         },
         eventRender: function(event, element) {
             var scope = $scope.$new(true);
