@@ -26,12 +26,20 @@ var Training = new Schema({
 });
 
 Training.pre('save', function(next) {
-    if(this.climbings.length === 0) {
+    if(typeof this.climbings === 'undefined' || this.climbings.length === 0) {
         return next(new Error('Climbings are required'));
     }
 
     next();
 });
 
+Training.pre('save', function(next) {
+
+    if(this._id && !this.date) {
+        return next(new Error('Date is required'));
+    }
+
+    next();
+});
 
 module.exports = db.model('training', Training);

@@ -50,8 +50,29 @@ app.get('/api/trainings', function(req, res) {
 });
 
 app.put('/api/trainings/:id', function(req, res) {
-    //TODO
-    res.json(200, {});
+
+    Training.findById(req.params.id, function(err, training) {
+        if(err) {
+            res.json(500, err.toString());
+        } else if(!training) {
+            res.json(404, {});
+        } else {
+            training.warm_up = req.body.warm_up;
+            training.climbings = req.body.climbings;
+            training.stretching = req.body.stretching;
+            training.desc = req.body.desc;
+            training.rate = req.body.rate;
+            training.exercises = req.body.exercises;
+
+            training.save(function(err) {
+                if(err) {
+                    res.json(500, err.toString());
+                } else {
+                    res.json(200, training);
+                }
+            });
+        }
+    });
 
 });
 
