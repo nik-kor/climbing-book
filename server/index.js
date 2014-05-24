@@ -50,7 +50,6 @@ app.get('/api/trainings', function(req, res) {
 });
 
 app.put('/api/trainings/:id', function(req, res) {
-
     Training.findById(req.params.id, function(err, training) {
         if(err) {
             res.json(500, err.toString());
@@ -78,7 +77,9 @@ app.put('/api/trainings/:id', function(req, res) {
 
 
 app.delete('/api/trainings/:id', function(req, res) {
-    res.json(200, {delete: 'TODO'});
+    Training.findByIdAndRemove(req.params.id, function() {
+        res.json(200, {});
+    });
 });
 
 
