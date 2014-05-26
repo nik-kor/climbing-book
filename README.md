@@ -7,9 +7,7 @@ TODO
 
 Features:
 
-- think about events(trainings) collection in the whole arch
- - how to use it to render new events
- - how to navigate between months
+- complete resources.trainings and tests
 
 - Add server side error logging
 - add datepicker into modal window

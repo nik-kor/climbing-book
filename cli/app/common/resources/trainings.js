@@ -3,17 +3,32 @@ angular.module('resources.trainings', [])
 .factory('Trainings', function($http, $q) {
 
 
-    var trainings = {},
-        _defer;
+    var trainings = {};
 
-    trainings.all = function() {
-        if(_defer) {
-            return _defer.promise;
+
+    /**
+     * month -> promise, e.g.
+     *      '2014.1' -> {Promise}
+     *
+     */
+    var _loaded = {};
+
+    /**
+     * Get trainings by month
+     *
+     * @param {String} month - 'YYYY.MM'
+     * @return {Promise}
+     */
+    trainings.all = function(month) {
+        if(typeof _loaded[month] !== 'undefined') {
+            return _loaded[month];
         }
 
-        _defer = $q.defer();
+        var _defer = $q.defer();
 
-        $http.get('/api/trainings')
+        _loaded[month] = _defer.promise;
+
+        $http.get('/api/trainings?month=' + month)
         .success(function(data) {
             data.forEach(function(tr) {
                 tr.date = new Date(tr.date);
@@ -25,7 +40,7 @@ angular.module('resources.trainings', [])
             _defer.reject(err);
         });
 
-        return _defer.promise;
+        return _loaded[month];
     };
 
     var normilizeTraining = function(source) {
@@ -44,11 +59,20 @@ angular.module('resources.trainings', [])
         return training._id
             ? $http.put('/api/trainings/' + training._id, normilizeTraining(training))
             : $http.post('/api/trainings', normilizeTraining(training));
+
+        //TODO - add new training to collection
     };
 
 
     trainings.delete = function(training) {
-        return $http.delete('/api/trainings/' + training._id);
+        var p = $http.delete('/api/trainings/' + training._id);
+
+        p.then(function() {
+            //TODO - delete training from collection
+
+        });
+
+        return p;
     };
 
 
