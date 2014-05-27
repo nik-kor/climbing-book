@@ -5,6 +5,7 @@ angular.module('resources.trainings', [])
 
     var trainings = {};
 
+    trainings.APIRootPath = '/api/trainings';
 
     /**
      * month -> promise, e.g.
@@ -28,7 +29,7 @@ angular.module('resources.trainings', [])
 
         _loaded[month] = _defer.promise;
 
-        $http.get('/api/trainings?month=' + month)
+        $http.get(trainings.APIRootPath + '?month=' + month)
         .success(function(data) {
             data.forEach(function(tr) {
                 tr.date = new Date(tr.date);
@@ -56,16 +57,23 @@ angular.module('resources.trainings', [])
     };
 
     trainings.save = function(training) {
-        return training._id
-            ? $http.put('/api/trainings/' + training._id, normilizeTraining(training))
-            : $http.post('/api/trainings', normilizeTraining(training));
+        var p = training._id
+            ? $http.put(trainings.APIRootPath + '/' + training._id, normilizeTraining(training))
+            : $http.post(trainings.APIRootPath, normilizeTraining(training));
 
-        //TODO - add new training to collection
+        if(!training._id) {
+
+            //TODO - add new training to collection
+            p.then(function(res) {
+
+            });
+        }
+
     };
 
 
     trainings.delete = function(training) {
-        var p = $http.delete('/api/trainings/' + training._id);
+        var p = $http.delete(trainings.APIRootPath + '/' + training._id);
 
         p.then(function() {
             //TODO - delete training from collection
