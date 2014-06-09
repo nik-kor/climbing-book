@@ -50,7 +50,7 @@ ddescribe('Trainings resource', function() {
         $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('should send requests for trainings filtered by month', function() {
+    iit('should send requests for trainings filtered by month', function() {
         var p;
 
         //january trainings
@@ -107,6 +107,11 @@ ddescribe('Trainings resource', function() {
 
         $httpBackend.flush();
 
+    });
+
+
+    Traingings.load(month).then(function() {
+        var trainings = Trainings.read(month);
     });
 
 });
