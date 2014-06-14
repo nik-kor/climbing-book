@@ -38,7 +38,10 @@ app.get('/api/trainings/:id', function(req, res) {
 
 
 app.get('/api/trainings', function(req, res) {
-    var query = Training.find({});
+    var d = req.query.month.split('.');
+
+    var query = Training.find({})
+        .where('date').gte(new Date(d[0], d[1] - 1)).lt(new Date(d[0], d[1]));
 
     query.exec(function(err, results) {
         if(err) {

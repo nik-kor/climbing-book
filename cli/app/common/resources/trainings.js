@@ -16,7 +16,7 @@ angular.module('resources.trainings', [])
      * @param {Object} date - instanceof Date
      * @return {String} - in format YYYY.MM?
      */
-    var getMonthId = function(date) {
+    trainings.getMonthId = function(date) {
         if(date instanceof Date) {
             return date.getFullYear() + '.' + (date.getMonth() + 1);
         }
@@ -101,8 +101,8 @@ angular.module('resources.trainings', [])
                 var tr = res.data;
                 tr.date = new Date(tr.date);
 
-                trainings.load(getMonthId(tr.date)).then(function() {
-                    _data[getMonthId(tr.date)].push(tr);
+                trainings.load(trainings.getMonthId(tr.date)).then(function() {
+                    _data[trainings.getMonthId(tr.date)].push(tr);
                 });
             });
         }
@@ -110,7 +110,7 @@ angular.module('resources.trainings', [])
 
 
     trainings.delete = function(training) {
-        var month = getMonthId(training.date),
+        var month = trainings.getMonthId(training.date),
             p = $http.delete(trainings.APIRootPath + '/' + training._id);
 
         p.then(function() {

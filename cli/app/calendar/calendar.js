@@ -9,7 +9,7 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
         controller: 'CalendarController',
         resolve: {
             trainings: function(Trainings) {
-                return Trainings.all();
+                return Trainings.load(Trainings.getMonthId(new Date));
             }
         }
     });
