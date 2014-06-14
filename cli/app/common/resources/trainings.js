@@ -79,8 +79,6 @@ angular.module('resources.trainings', [])
         return _data[month];
     };
 
-
-
     var normilizeTraining = function(source) {
         return {
             warm_up: source.warm_up,
@@ -100,10 +98,11 @@ angular.module('resources.trainings', [])
 
         if(!training._id) {
             p.then(function(res) {
-                res.date = new Date(res.date);
+                var tr = res.data;
+                tr.date = new Date(tr.date);
 
-                trainings.load(getMonthId(res.date)).then(function() {
-                    _data[getMonthId(res.date)].push(res);
+                trainings.load(getMonthId(tr.date)).then(function() {
+                    _data[getMonthId(tr.date)].push(tr);
                 });
             });
         }
@@ -115,7 +114,7 @@ angular.module('resources.trainings', [])
             p = $http.delete(trainings.APIRootPath + '/' + training._id);
 
         p.then(function() {
-            _date[month] = _date[month].filter(function(t) {
+            _data[month] = _data[month].filter(function(t) {
                 return t._id !== training._id;
             });
         });

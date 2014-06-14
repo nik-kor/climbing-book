@@ -26,13 +26,13 @@ ddescribe('Trainings resource', function() {
         stretching: false,
         desc: 'desc',
         rate: 8,
-        date: '2014.1',
+        date: '2014.1.21',
         exercises: 'excercises'
     };
-    fixtures.trainings = {
-        '2014.1': [fixtures.training],
-        '2014.5': [{date: '2014.5', warm_up: 'some'}]
-    };
+
+    fixtures.trainings = {};
+    fixtures.trainings[JANUARY_TR] = [fixtures.training];
+    fixtures.trainings[MAY_TR] = [{date: MAY_TR + '.12', warm_up: 'some'}];
 
     var Trainings, $httpBackend, $q, $rootScope;
 
@@ -50,23 +50,25 @@ ddescribe('Trainings resource', function() {
         $httpBackend.verifyNoOutstandingRequest();
     });
 
-    iit('should send requests for trainings filtered by month', function() {
+    it('should fullfill promises and then training available', function() {
         var p;
 
         //january trainings
         $httpBackend.expect('GET', Trainings.APIRootPath + '?month=' + JANUARY_TR)
             .respond(200, fixtures.trainings[JANUARY_TR]);
 
-        p = Trainings.all(JANUARY_TR);
+        p = Trainings.load(JANUARY_TR);
 
         var resolved = jasmine.createSpy('resolved');
         p.then(resolved);
         $httpBackend.flush();
 
+        expect(Trainings.read(JANUARY_TR).length).toBe(fixtures.trainings[JANUARY_TR].length);
+
         expect(resolved).toHaveBeenCalled();
         expect(resolved.calls.length).toBe(1);
 
-        Trainings.all(JANUARY_TR).then(resolved);
+        Trainings.load(JANUARY_TR).then(resolved);
         $rootScope.$apply();
         expect(resolved.calls.length).toBe(2);
 
@@ -74,13 +76,15 @@ ddescribe('Trainings resource', function() {
         $httpBackend.expect('GET', Trainings.APIRootPath + '?month=' + MAY_TR)
             .respond(200, fixtures.trainings[MAY_TR]);
 
-        p = Trainings.all(MAY_TR)
+        p = Trainings.load(MAY_TR);
 
         var resolved = jasmine.createSpy('resolved');
         p.then(resolved);
 
         $httpBackend.flush();
         expect(resolved).toHaveBeenCalled();
+
+        expect(Trainings.read(MAY_TR).length).toBe(fixtures.trainings[MAY_TR].length);
     });
 
     it('should create Date objects', function() {
@@ -89,29 +93,40 @@ ddescribe('Trainings resource', function() {
         $httpBackend.expect('GET', Trainings.APIRootPath + '?month=' + JANUARY_TR)
             .respond(200, fixtures.trainings[JANUARY_TR]);
 
-        p = Trainings.all(JANUARY_TR);
-
-        var trs;
-        p.then(function(res) {trs = res;});
+        p = Trainings.load(JANUARY_TR);
 
         $httpBackend.flush();
-        expect(trs[0].date instanceof Date).toBeTruthy();
+        expect(Trainings.read(JANUARY_TR)[0].date instanceof Date).toBeTruthy();
     });
 
 
     it('should save a new training', function() {
         $httpBackend.expect('POST', Trainings.APIRootPath)
-            .respond(200, '');
+            .respond(200, '{"_id": "asfdsafddsf132", "date": "2013.01.21" }');
+
+        $httpBackend.expect('GET', Trainings.APIRootPath + '?month=2013.1')
+            .respond(200, '[]');
 
         Trainings.save(fixtures.training);
 
         $httpBackend.flush();
-
     });
 
 
-    Traingings.load(month).then(function() {
-        var trainings = Trainings.read(month);
-    });
+    it('should delete training from collection', function() {
+        fixtures.trainings[JANUARY_TR][0]._id = 'asdfsad12312sdf';
+        $httpBackend.expect('GET', Trainings.APIRootPath + '?month=' + JANUARY_TR)
+            .respond(200, fixtures.trainings[JANUARY_TR]);
 
+        Trainings.load(JANUARY_TR);
+        $httpBackend.flush();
+        expect(Trainings.read(JANUARY_TR)[0]._id).toBe(fixtures.trainings[JANUARY_TR][0]._id);
+
+        $httpBackend.expect('DELETE', Trainings.APIRootPath + '/' + fixtures.trainings[JANUARY_TR][0]._id)
+            .respond(200, '');
+
+        Trainings.delete(Trainings.read(JANUARY_TR)[0]);
+        $httpBackend.flush();
+        expect(Trainings.read(JANUARY_TR).length).toBe(0);
+    });
 });
