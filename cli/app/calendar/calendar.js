@@ -9,26 +9,25 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
         controller: 'CalendarController',
         resolve: {
             trainings: function(Trainings) {
-                return Trainings.load(Trainings.getMonthId(new Date));
+                return Trainings.load(Trainings.getMonthId(new Date()));
             }
         }
     });
 })
 
-.controller('CalendarController', function($scope, $templateCache, flash, trainings, $compile, trainingModal) {
+.controller('CalendarController', function($scope, $templateCache, flash, trainings,
+    $compile, trainingModal, Trainings
+) {
 
     $scope.trainings = trainings;
+
 
     $scope.calendar_config = {
         firstDay: 1,
         weekNumbers: true,
         height: 600,
         editable: true,
-        header:{
-            left: 'today prev,next',
-            center: 'title',
-            right: ''
-        },
+        header: false,
         eventRender: function(event, element) {
             var scope = $scope.$new(true);
             scope.training = event;
@@ -52,4 +51,43 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
         borderColor: 'white',
         textColor: 'black'
     }];
+
+    $scope.monthSelected = Date.now();
+
+    var updateMonth = function(d) {
+        $scope.monthSelected = d.getTime();
+    };
+
+    $scope.next = function() {
+        $scope.myCalendar.fullCalendar('next');
+        var d = $scope.myCalendar.fullCalendar('getDate');
+
+        //TODO
+
+        // Trainings.load(Trainings.getMonthId(d)).then(function() {
+
+        //     $scope.eventSources.events.push(
+        //     console.log(Trainings.read(Trainings.getMonthId(d)));
+
+        // });
+
+
+        updateMonth(d);
+    };
+
+    $scope.prev = function() {
+        $scope.myCalendar.fullCalendar('prev');
+
+        //TODO
+        updateMonth();
+
+    };
+
+    $scope.today = function() {
+        $scope.myCalendar.fullCalendar('today');
+        //TODO
+        updateMonth();
+
+    };
+
 });

@@ -37,7 +37,8 @@ module.exports = function(grunt) {
                 files: {
                     'public/css/app.css': [
                         'cli/bower_components/bootstrap/dist/css/bootstrap.css',
-                        'cli/bower_components/fullcalendar/fullcalendar.css'
+                        'cli/bower_components/fullcalendar/fullcalendar.css',
+                        'cli/style.css'
                     ]
                 }
             }

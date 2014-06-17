@@ -7,7 +7,7 @@ TODO
 
 Features:
 
-- complete resources.trainings and tests
+- use resources.trainings in application
 
 - Add server side error logging
 - add datepicker into modal window
