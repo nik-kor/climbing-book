@@ -16,7 +16,7 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
 })
 
 .controller('CalendarController', function($scope, $templateCache, flash, trainings,
-    $compile, trainingModal, Trainings
+    $compile, trainingModal//, Trainings
 ) {
 
     $scope.trainings = trainings;
@@ -45,12 +45,16 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
         startParam: 'date'
     };
 
-    $scope.eventSources = [{
-        events: $scope.trainings,
+    var eventSources = eventSourcesService.create(trainings, monthId)[{
+        events: [], //$scope.trainings,
         backgroundColor: 'white',
         borderColor: 'white',
-        textColor: 'black'
+        textColor: 'black',
+        monthId: '2014.6'
     }];
+
+    $scope.eventSources = eventSources;
+    eventSourcesService.eventSources = eventSources;
 
     $scope.monthSelected = Date.now();
 
@@ -62,6 +66,9 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
         $scope.myCalendar.fullCalendar('next');
         var d = $scope.myCalendar.fullCalendar('getDate');
 
+        if(eventSourcesService.isLoaded(Trainings.getMonthId(d))) {
+            return;
+        }
         //TODO
 
         // Trainings.load(Trainings.getMonthId(d)).then(function() {
@@ -79,14 +86,27 @@ angular.module('calendar', ['ngRoute', 'ui.calendar',
         $scope.myCalendar.fullCalendar('prev');
 
         //TODO
-        updateMonth();
+        //updateMonth();
 
+        $scope.eventSources.push({
+            events: [
+                {
+                    date: '2014-05-01'
+                }
+            ]
+        });
     };
 
     $scope.today = function() {
         $scope.myCalendar.fullCalendar('today');
+
         //TODO
-        updateMonth();
+        //updateMonth();
+
+
+        $scope.eventSources[0].events.push({
+            date: '2014-06-01'
+        });
 
     };
 
