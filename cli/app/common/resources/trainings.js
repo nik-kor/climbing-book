@@ -1,44 +1,11 @@
-angular.module('resources.trainings', [])
+angular.module('resources.trainings', ['services.date'])
 
-.factory('Trainings', function($http, $q) {
+.factory('Trainings', function($http, $q, dateService) {
 
 
     var trainings = {};
 
     trainings.APIRootPath = '/api/trainings';
-
-
-    /**
-     * Get month id, e.g
-     *  - 2014.1 - january 2014
-     *  - 2013.12 - december 2014
-     *
-     * @param {Object} date - instanceof Date
-     * @return {String} - in format YYYY.MM?
-     */
-    trainings.getMonthId = function(date) {
-        if(date instanceof Date) {
-            return date.getFullYear() + '.' + (date.getMonth() + 1);
-        }
-
-        throw new Error('Input parameter date is not an instance of Date');
-    };
-
-    /**
-     * @var {Object}
-     *
-     * month -> promise, e.g.
-     *     '2014.1' -> {Promise}
-     */
-    var _loaded = {};
-
-    /**
-     * @var {Object}
-     *
-     * month -> collection of trainings, e.g
-     *      '2014.1' -> [{_id: 1}, {_id: 2}]
-     */
-    var _data = {};
 
     /**
      * Get trainings by month
@@ -46,14 +13,9 @@ angular.module('resources.trainings', [])
      * @param {String} month - 'YYYY.MM'
      * @return {Promise}
      */
-    trainings.load = function(month) {
-        if(typeof _loaded[month] !== 'undefined') {
-            return _loaded[month];
-        }
+    trainings.get = function(month) {
 
         var _defer = $q.defer();
-
-        _loaded[month] = _defer.promise;
 
         $http.get(trainings.APIRootPath + '?month=' + month)
             .success(function(data) {
@@ -61,22 +23,13 @@ angular.module('resources.trainings', [])
                     tr.date = new Date(tr.date);
                 });
 
-                _data[month] = data;
-
-                _defer.resolve(true);
+                _defer.resolve(data);
             })
             .error(function(err) {
                 _defer.reject(err);
             });
 
-        return _loaded[month];
-    };
-
-    /**
-     * Read directly from _data
-     */
-    trainings.read = function(month) {
-        return _data[month];
+        return _defer.promise;
     };
 
     var normilizeTraining = function(source) {
@@ -101,22 +54,24 @@ angular.module('resources.trainings', [])
                 var tr = res.data;
                 tr.date = new Date(tr.date);
 
-                trainings.load(trainings.getMonthId(tr.date)).then(function() {
-                    _data[trainings.getMonthId(tr.date)].push(tr);
-                });
+                //TODO
+                // trainings.load(dateService.getMonthId(tr.date)).then(function() {
+                //     _data[dateService.getMonthId(tr.date)].push(tr); });
             });
         }
     };
 
 
     trainings.delete = function(training) {
-        var month = trainings.getMonthId(training.date),
+        var month = dateService.getMonthId(training.date),
             p = $http.delete(trainings.APIRootPath + '/' + training._id);
 
+        console.log(month);
+
         p.then(function() {
-            _data[month] = _data[month].filter(function(t) {
-                return t._id !== training._id;
-            });
+            // _data[month] = _data[month].filter(function(t) {
+            //     return t._id !== training._id;
+            // });
         });
 
         return p;

@@ -1,4 +1,4 @@
-angular.module('app', ['ngRoute', 'ui.bootstrap','calendar',
+angular.module('app', ['ngRoute', 'ui.bootstrap', 'calendar',
     'angular-flash.service', 'angular-flash.flash-alert-directive'])
 
 .config(function($routeProvider, flashProvider) {
